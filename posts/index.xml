@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Brian&#39;s Blog</title>
-    <link>https://bhamill638.github.io/posts/</link>
+    <link>https://brian.hamill.dev/posts/</link>
     <description>Brian&#39;s Blog (Posts)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Sun, 23 Aug 2020 21:02:58 +0100</lastBuildDate>
     
-    <atom:link href="https://bhamill638.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://brian.hamill.dev/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>First Post - Introduction</title>
-      <link>https://bhamill638.github.io/posts/first-post/</link>
+      <link>https://brian.hamill.dev/posts/first-post/</link>
       <pubDate>Sun, 23 Aug 2020 21:02:58 +0100</pubDate>
       
-      <guid>https://bhamill638.github.io/posts/first-post/</guid>
+      <guid>https://brian.hamill.dev/posts/first-post/</guid>
       <description>&lt;p&gt;Welcome! The object of this blog is to write up notes and personal opinions relating to cyber security and software.&lt;/p&gt;
 &lt;p&gt;The intention is to write detailed posts on specific tools or concepts so that I can refer to this blog as a sort of &amp;lsquo;cheat sheet&amp;rsquo;.&lt;/p&gt;
 &lt;p&gt;To make creating posts quick and easy, I&amp;rsquo;ve used &lt;a href=&#34;https://pages.github.com/&#34;&gt;GitHub Pages&lt;/a&gt;, &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; the static site generator and the simple &lt;a href=&#34;https://github.com/Mitrichius/hugo-theme-anubis&#34;&gt;Anubis&lt;/a&gt; theme (with one tiny modification to the theme to change the HTML &lt;code&gt;title&lt;/code&gt; attribute for each post).&lt;/p&gt;
