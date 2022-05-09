@@ -6,10 +6,218 @@
     <description>Brian&#39;s Blog (Posts)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 23 Aug 2020 21:02:58 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 09 May 2022 10:40:00 +0100</lastBuildDate>
     
     <atom:link href="https://brian.hamill.dev/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>What is Nmap?</title>
+      <link>https://brian.hamill.dev/posts/nmap/</link>
+      <pubDate>Mon, 09 May 2022 10:40:00 +0100</pubDate>
+      
+      <guid>https://brian.hamill.dev/posts/nmap/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://nmap.org/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Nmap&lt;/a&gt; (“Network Mapper”) is a free, open source, network scanning tool.&lt;/p&gt;
+
+&lt;p&gt;Nmap is a widely used tool that can scan a network and identify the machines on the network, or can be used to scan an individual machine to find out useful info about that device such as; the operating system of the host (computer/device), the applications or services running on the machine and which ports are open for those services.&lt;/p&gt;
+
+&lt;h1 id=&#34;disclaimer&#34;&gt;Disclaimer&lt;/h1&gt;
+
+&lt;p&gt;Running the Nmap tool, or any network scanning tool, can be interpreted as illegal depending on local or country-specific laws. Please ensure you have permission to perform a scan of a network/device before beginning. If you just want to try Nmap out and follow along with this blog, performing scans on devices that are on your home network will work just fine. You can also use &lt;a href=&#34;http://scanme.nmap.org&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;scanme.nmap.org&lt;/a&gt; so long as you abide by the restrictions mentioned on that web page.&lt;/p&gt;
+
+&lt;h1 id=&#34;assumptions&#34;&gt;Assumptions&lt;/h1&gt;
+
+&lt;p&gt;There are a number of key technical terms and practices that will be covered which are listed here. All of the &lt;code&gt;nmap&lt;/code&gt; commands shown in this post are done from within the command line (aka terminal).&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;How to use the command line on &lt;a href=&#34;https://www.computerhope.com/issues/chusedos.htm&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Windows&lt;/a&gt;, &lt;a href=&#34;https://www.macworld.co.uk/how-to/mac-software/how-use-terminal-on-mac-3608274/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Mac&lt;/a&gt; or &lt;a href=&#34;https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://nmap.org/book/install.html&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Installing Nmap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.lifewire.com/what-is-an-ip-address-2625920&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;What is an IP address?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.bleepingcomputer.com/tutorials/tcp-and-udp-ports-explained/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;What is a port?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cloudflare.com/en-gb/learning/network-layer/what-is-a-subnet/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;A basic understanding of what a subnet is&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/understanding-ip-addresses-subnets-and-cidr-notation-for-networking#cidr-notation&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Knowledge of CIDR notation may be useful but not 100% necessary&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;basic-usage-of-nmap&#34;&gt;Basic usage of Nmap&lt;/h1&gt;
+
+&lt;p&gt;The most simple usage of Nmap is to scan one device&amp;rsquo;s IP address or website URL such as the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;nmap 45.33.32.156
+&lt;span style=&#34;color:#75715e&#34;&gt;# or&lt;/span&gt;
+nmap scanme.nmap.org&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This command will scan the IP address provided, checking the 1000 most common ports and will produce results showing which ports are open and what service is likely to be using that port.
+Check out &lt;a href=&#34;https://nullsec.us/top-1-000-tcp-and-udp-ports-nmap-default/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;this blog post&lt;/a&gt; to know more about which ports are scanned.&lt;/p&gt;
+
+&lt;p&gt;The output will look something like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://brian.hamill.dev/nmap1.png&#34; alt=&#34;a screenshot showing the mac terminal output of the nmap command run against scanme.nmap.org&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;interpreting-the-results&#34;&gt;Interpreting the Results&lt;/h2&gt;
+
+&lt;p&gt;While the output may look confusing at first, it doesn&amp;rsquo;t take long to understand how to pull out the useful information. The first four lines give some details about the scan, we can mostly ignore these lines to focus on the main content:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://brian.hamill.dev/nmap2.png&#34; alt=&#34;a screenshot showing the mac terminal output of the nmap command run against scanme.nmap.org with a red rectangle highlighting the section of results starting with the port, state and service&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The results of our scan are displayed in three columns; port, state and service.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;PORT&lt;/strong&gt;: gives us both the port number and the type of protocol that was found, TCP (Transfer Control Protocol) or UDP (User Datagram Protocol).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;STATE&lt;/strong&gt;: lets us know if the port is open, filtered or unfiltered. (There are also two states for when Nmap isn&amp;rsquo;t sure if the port is open or closed AND filtered)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SERVICE&lt;/strong&gt;: gives us info on which service is most likely to be running on this port at the time (for example HTTP shown in the above screenshot)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This means that the above screenshot shows the website &lt;code&gt;scanme.nmap.org&lt;/code&gt; with the IP address &lt;code&gt;45.33.32.156&lt;/code&gt; has TCP ports 80, 443, 3128 and 8080 open.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What does that mean?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Ports 80 and 443 are used for HTTP and HTTPS respectively, which means this is a website as we can tell by going to the URL in our browser.&lt;br /&gt;
+Port 3128 is often used by the squid-proxy service which is, unsurprisingly, a proxy, finally port 8080 is a HTTP proxy.&lt;/p&gt;
+
+&lt;h1 id=&#34;scanning-multiple-ip-addresses&#34;&gt;Scanning Multiple IP Addresses&lt;/h1&gt;
+
+&lt;p&gt;Nmap also has a number of ways to scan multiple devices on a network, it can handle space-separated IP addresses, a range of addresses or &lt;a href=&#34;https://www.ionos.com/digitalguide/server/know-how/cidr-classless-inter-domain-routing/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;CIDR notation&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Scan these three space-separated IP addresses:&lt;/span&gt;
+nmap 192.168.0.1 192.168.0.2 192.168.0.3
+ 
+&lt;span style=&#34;color:#75715e&#34;&gt;# Scan this range of IP addresses:&lt;/span&gt;
+nmap 192.168.0.1-3
+ 
+&lt;span style=&#34;color:#75715e&#34;&gt;# Scan this block of IP addresses using CIDR notation&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# (This will scan all addresses from 192.168.0.1 to 192.168.0.254):&lt;/span&gt;
+nmap 192.168.0.0/24&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1 id=&#34;nmap-flags&#34;&gt;Nmap Flags&lt;/h1&gt;
+
+&lt;p&gt;Now that we know the basic usage and understand the results we can use different flags to make Nmap do many different things. We can get it to scan all 65535 ports, make it scan slower or faster or even get an idea of what operating system is running on the target device. To do this we add &lt;a href=&#34;https://nmap.org/book/port-scanning-options.html&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;&amp;lsquo;flags&amp;rsquo;&lt;/a&gt; to our &lt;code&gt;nmap&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;h2 id=&#34;common-flags&#34;&gt;Common Flags:&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Flag&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;-A&lt;/td&gt;
+&lt;td&gt;Aggressive scan - “Enable OS detection, version detection, script scanning, and traceroute”.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-p 22&lt;/td&gt;
+&lt;td&gt;Port number - specifies a port or list of ports (comma separated) to scan.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-p-&lt;/td&gt;
+&lt;td&gt;Scan all ports.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-T4&lt;/td&gt;
+&lt;td&gt;Set a timing template - Sets how fast Nmap will perform the scan on the network, with values from 0-5. Zero and one are intended to bypass detection as they are so slow they may not be flagged by monitoring tools. If the T flag is not specified the default speed is 3 - &amp;lsquo;normal&amp;rsquo;.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-v&lt;/td&gt;
+&lt;td&gt;Verbose output - Prints more information about the scan while it is running, such as when an open port is found and an estimated completion time.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-sS&lt;/td&gt;
+&lt;td&gt;Stealth scan - Harder to detect as TCP connections are not completed with this flag specified.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-oN filename.txt&lt;/td&gt;
+&lt;td&gt;Normal output - Saves the scan results to an output text file.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-Pn&lt;/td&gt;
+&lt;td&gt;Stops Nmap sending pings to identify if a host is up or down. Sometimes hosts deliberately won&amp;rsquo;t respond to pings so this flag needs to be set. More info on this &lt;a href=&#34;https://security.stackexchange.com/a/31855&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-sC&lt;/td&gt;
+&lt;td&gt;Scripted scan - Runs a number of &lt;a href=&#34;https://nmap.org/nsedoc/categories/default.html&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;default scripts&lt;/a&gt; against a target to find info such as MAC address, listing discovered directories and fingerprinting usernames.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-sn&lt;/td&gt;
+&lt;td&gt;Ping scan - Pings the host(s) to see if they exist.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-sU&lt;/td&gt;
+&lt;td&gt;Perform a UDP scan.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&amp;ndash;help&lt;/td&gt;
+&lt;td&gt;Nmap help - Displays useful information such as command syntax and a list of flags and options.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;saving-results&#34;&gt;Saving Results&lt;/h1&gt;
+
+&lt;p&gt;It&amp;rsquo;s possible to save the output of an Nmap scan to a file. This is useful for various reasons; doing an official pentest on a company and need to keep detailed evidence of findings or you want to compare the results over time to see if specific ports have opened or closed recently. You may even want to create a script to interpret or process these results programmatically. Luckily Nmap has a number of different output types to choose from.&lt;/p&gt;
+
+&lt;p&gt;There are four main formats for nmap results; normal, XML, grepable and &amp;lsquo;all&amp;rsquo;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;nmap -oN output_filename.nmap scanme.nmap.org
+nmap -oX output_filename.xml scanme.nmap.org
+nmap -oG output_filename.gnmap scanme.nmap.org
+nmap -oA output_filename scanme.nmap.org&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;-oN&lt;/code&gt; - &lt;strong&gt;Normal&lt;/strong&gt; - saves the results to a file that looks almost identical to the results we see in the terminal, this is the most human readable output type.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;-oX&lt;/code&gt; - &lt;strong&gt;XML&lt;/strong&gt; - saves the output to XML format which can be easily parsed and used by various scripting languages. This format is often desired if you&amp;rsquo;re planning on writing a script that will do something with the scan results.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;-oG&lt;/code&gt; - &lt;strong&gt;Grepable&lt;/strong&gt; - saves the output so that it&amp;rsquo;s easily parsable by a number of common Unix command line tools such as grep, sed and awk. This is helpful if you&amp;rsquo;re wanting to write a quick script to pull out a specific field or check results.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;-oA&lt;/code&gt; - &lt;strong&gt;All&lt;/strong&gt; - saves the scan results in all three of the above formats which can be handy if you want to keep the results for later but are not sure how you&amp;rsquo;ll process them yet.&lt;/p&gt;
+
+&lt;h1 id=&#34;use-nmap-to-find-all-devices-on-a-network&#34;&gt;Use Nmap to Find all Devices on a Network&lt;/h1&gt;
+
+&lt;p&gt;There is no single, &lt;em&gt;completely&lt;/em&gt; accurate way to find all devices on a network, there will always be caveats and situations where certain devices might be missed, however Nmap can give us a good rough estimate of what hosts are available and discoverable.&lt;/p&gt;
+
+&lt;p&gt;As mentioned in the &lt;a href=&#34;#scanning-multiple-ip-addresses&#34;&gt;Scanning Multiple IP Addresses&lt;/a&gt; section we can use CIDR notation to scan a block/range of IP addresses, this is generally the easiest method when attempting to find all devices.&lt;/p&gt;
+
+&lt;p&gt;To get our rough estimate of devices on a network we can check all IPs from 192.168.0.1 to 192.168.0.254 using the following command with the &lt;code&gt;-sn&lt;/code&gt; flag:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;nmap -sn 192.168.0.0/24&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This command will ping all devices in that IP range and output a list of the hosts that returned a response. According to &lt;a href=&#34;https://security.stackexchange.com/a/36200&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;this stackexchange post&lt;/a&gt; if the ping fails Nmap will attempt to send SYN packages to the device on port 80. Unfortunately neither of these methods are a guaranteed way to see if a device definitely exists or doesn&amp;rsquo;t since the device may be configured both to not respond to pings and to not respond to SYN requests on port 80.&lt;/p&gt;
+
+&lt;p&gt;If you need an absolutely definitive list of hosts you can omit the &lt;code&gt;-sn&lt;/code&gt; flag and scan the 1000 most common ports of every IP, specify certain ports or even add the &lt;code&gt;-p-&lt;/code&gt; flag and scan all ports of every IP, but any of these will take a very long to complete and might not be very useful unless you&amp;rsquo;re doing full internal network discovery for a pentest or professional engagement.&lt;/p&gt;
+
+&lt;h1 id=&#34;common-flags-for-routine-usage&#34;&gt;Common Flags for Routine Usage&lt;/h1&gt;
+
+&lt;p&gt;There are two main variations of the Nmap command that would be my go-to commands when using this tool; A quick scan of the most common ports and a full scan of all ports including OS detection.&lt;/p&gt;
+
+&lt;p&gt;The quick scan is for when I want to know if a machine has ports such as 8080 or 22 open etc. The &amp;lsquo;full&amp;rsquo; scan command was mostly what I used when working as a pentester, I&amp;rsquo;d kick off the scan to check all ports and find the operating system because even though this usually takes a good 10 mins to complete the info was very useful for identifying services to attack.&lt;/p&gt;
+
+&lt;p&gt;These two commands are:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Quick scan of the common ports&lt;/span&gt;
+nmap scanme.nmap.org
+ 
+&lt;span style=&#34;color:#75715e&#34;&gt;# &amp;#39;Full&amp;#39; scan of all the ports with OS detection etc&lt;/span&gt;
+nmap -p- -A scanme.nmap.org&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; The &lt;code&gt;-Pn&lt;/code&gt; flag may need added if the target machine doesn&amp;rsquo;t respond to pings, but the good news is that Nmap generally shows a message mentioning this if that&amp;rsquo;s the case.&lt;/p&gt;
+
+&lt;h1 id=&#34;further-reading&#34;&gt;Further Reading&lt;/h1&gt;
+
+&lt;p&gt;If you&amp;rsquo;re wanting to learn more about Nmap, advanced usage or more about port scanning these links might be helpful:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://nmap.org/book/man.html&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Nmap documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://nmap.org/zenmap/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Zenmap, the Nmap GUI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://bytexd.com/how-to-use-nmap/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;A comprehensive guide on Nmap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.opensourceforu.com/2011/04/advanced-nmap-nmap-script-scanning/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Nmap Scripting Engine (NSE) guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://nudesystems.com/11-most-used-nmap-commands-for-advanced-scanning/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Commands for advanced scanning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://danielmiessler.com/study/masscan/&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;Masscan, port scan the entire internet in minutes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://nmap.org/book/scan-methods-udp-scan.html&#34; rel=&#34;nofollow noreferrer&#34; target=&#34;_blank&#34;&gt;UDP scanning with Nmap&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>First Post - Introduction</title>
